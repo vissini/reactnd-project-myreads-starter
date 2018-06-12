@@ -31,6 +31,17 @@ class BooksApp extends React.Component {
       this.getAllBooks()
     })
   }
+  search=(query,maxResults)=>{
+    this.setState({
+      searchLoading:true
+    })
+    BooksAPI.search(query).then(results=>{
+      this.setState({
+        searchLoading:false,
+        results:results
+      })
+    })
+  }
 
   render() {
     console.log(`BOOKS =${this.state.books}`)
@@ -44,7 +55,12 @@ class BooksApp extends React.Component {
           />
         )}/>
         <Route path='/search' render={() => (
-          <SearchBooks />
+          <SearchBooks 
+            search={this.search}
+            searchLoading={this.state.searchLoading}
+            results={this.state.results}
+            moveTo={this.moveTo}
+          />
         )}/>
         
       </div>
