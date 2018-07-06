@@ -14,11 +14,15 @@ class ListBooks extends React.Component{
     render(){
         console.log(this.state,this.props);
         const currentlyReadingBooks=this.props.books.filter((book=>book.shelf==='currentlyReading')).map((book)=>{
+            if(typeof(book.imageLinks) == 'undefined'){
+                book.imageLinks = {};
+                book.imageLinks.thumbnail = 'http://3.bp.blogspot.com/-s3yBaPBn8Hc/Uh4-wAZOQLI/AAAAAAAAJT8/GY9d_VJFm3o/s1600/play-books-no-cover.jpg';
+              }
             return(
                 <li key={book.id}>
                     <div className="book">
                         <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}"` }}></div>
+                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                         <div className="book-shelf-changer">
                             <select defaultValue={book.shelf} onChange={(e)=>{this.props.moveTo(book,e.target.value);}}>
                             <option value="none" disabled>Move to...</option>
@@ -40,11 +44,15 @@ class ListBooks extends React.Component{
             )
         });
         const wantToReadBooks=this.props.books.filter((book=>book.shelf==='wantToRead')).map((book)=>{
+            if(typeof(book.imageLinks) == 'undefined'){
+                book.imageLinks = {};
+                book.imageLinks.thumbnail = 'http://3.bp.blogspot.com/-s3yBaPBn8Hc/Uh4-wAZOQLI/AAAAAAAAJT8/GY9d_VJFm3o/s1600/play-books-no-cover.jpg';
+              }
             return(
                 <li key={book.id}>
                     <div className="book">
                         <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}"` }}></div>
+                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                         <div className="book-shelf-changer">
                             <select defaultValue={book.shelf} onChange={(e)=>{this.props.moveTo(book,e.target.value);}}>
                             <option value="none" disabled>Move to...</option>
@@ -66,11 +74,15 @@ class ListBooks extends React.Component{
             )
         });
         const readBooks=this.props.books.filter((book=>book.shelf==='read')).map((book)=>{
+            if(typeof(book.imageLinks) == 'undefined'){
+                book.imageLinks = {};
+                book.imageLinks.thumbnail = 'http://3.bp.blogspot.com/-s3yBaPBn8Hc/Uh4-wAZOQLI/AAAAAAAAJT8/GY9d_VJFm3o/s1600/play-books-no-cover.jpg';
+              }
             return(
                 <li key={book.id}>
                     <div className="book">
                         <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}"` }}></div>
+                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                         <div className="book-shelf-changer">
                             <select defaultValue={book.shelf} onChange={(e)=>{this.props.moveTo(book,e.target.value);}} >
                             

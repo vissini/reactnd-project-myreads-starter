@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SearchBooks from './SearchBooks'
@@ -8,9 +8,7 @@ import './App.css'
 class BooksApp extends React.Component {
   state = {
     books:[],
-    loading:false,
-    searchLoading:false,
-    results:[]
+    loading:false
   }
   getAllBooks=()=>{
     this.setState({
@@ -31,17 +29,6 @@ class BooksApp extends React.Component {
       this.getAllBooks()
     })
   }
-  search=(query,maxResults)=>{
-    this.setState({
-      searchLoading:true
-    })
-    BooksAPI.search(query).then(results=>{
-      this.setState({
-        searchLoading:false,
-        results:results
-      })
-    })
-  }
 
   render() {
     console.log(`BOOKS =${this.state.books}`)
@@ -58,8 +45,8 @@ class BooksApp extends React.Component {
           <SearchBooks 
             search={this.search}
             searchLoading={this.state.searchLoading}
-            results={this.state.results}
             moveTo={this.moveTo}
+            resultados={this.state.books}
           />
         )}/>
         
