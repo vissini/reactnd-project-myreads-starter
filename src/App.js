@@ -46,7 +46,7 @@ class BooksApp extends React.Component {
             search={this.search}
             searchLoading={this.state.searchLoading}
             moveTo={this.moveTo}
-            resultados={this.state.books}
+            livroEstante={this.state.books}
           />
         )}/>
         

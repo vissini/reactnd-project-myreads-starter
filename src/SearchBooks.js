@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 class SearchBooks extends React.Component{
     static propTypes = {
         moveTo:PropTypes.func.isRequired,
-        resultados:PropTypes.array
+        livroEstante:PropTypes.array
       }
 
       state={
@@ -15,12 +15,20 @@ class SearchBooks extends React.Component{
         resultado:[]
       }
       componentDidMount(){
-        console.log('Search!');
-    
       }
       updateQuery=(query)=>{
         this.setState({ query : query })
         this.search(query.trim())
+      }
+
+      returnShelf=(id)=>{
+        let shelf = "none";
+        this.props.livroEstante.map((bookEstante)=>{
+          if(bookEstante.id == id){
+            shelf = bookEstante.shelf;
+          }
+        })
+        return shelf;
       }
 
       search=(query,maxResults)=>{
@@ -36,14 +44,17 @@ class SearchBooks extends React.Component{
       }
       render(){
         let results
+        let shelfActual = "none";
         console.log(typeof this.state.resultado);
+        console.log("ESTANTE"+this.props.livroEstante);
         if( Object.prototype.toString.call( this.state.resultado ) === '[object Array]' ) {
           results=this.state.resultado.map((book)=>{
+            shelfActual = this.returnShelf(book.id);
             if(typeof(book.imageLinks) == 'undefined'){
               book.imageLinks = {};
               book.imageLinks.thumbnail = 'http://3.bp.blogspot.com/-s3yBaPBn8Hc/Uh4-wAZOQLI/AAAAAAAAJT8/GY9d_VJFm3o/s1600/play-books-no-cover.jpg';
             }
-            console.log(typeof book.authors);
+            
             return(
               <li key={book.id}>
                 <div className="book">
@@ -51,7 +62,7 @@ class SearchBooks extends React.Component{
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                     {(Object.prototype.toString.call( this.state.resultado ) === '[object Object]')?`No results`:''}
                     <div className="book-shelf-changer">
-                      <select onChange={(e)=>{this.props.moveTo(book,e.target.value);}} defaultValue={book.shelf?book.shelf:"none"}>
+                      <select onChange={(e)=>{this.props.moveTo(book,e.target.value);}} defaultValue={shelfActual}>
                         <option value="" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
